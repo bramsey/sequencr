@@ -113,7 +113,7 @@ textarea {
     background-color: blue;
 }
 
-.sequencer:nth-child(4n) {
+.sequencer-button:nth-of-type(4n) {
     width: 31px;
     height: 31px;
     border: 2px solid #666;
