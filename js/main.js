@@ -4,13 +4,15 @@ $(document).ready(function() {
     , currentStep = 1
     , NUM_OF_STEPS = 16
     , NUM_OF_TRACKS = 3
-    , SIXTEENTH_NOTE_TIME = 150; // ms
+    , SIXTEENTH_NOTE_TIME = 150
+    , SOUND_LEVEL = 0.3; // ms
 
   // populate the `sounds` object
-  sounds = {};
-  sounds.kick = new Sound("audio/kick.wav", 0.3);
-  sounds.snare = new Sound("audio/snare.wav", 0.3);
-  sounds.hihat = new Sound("audio/hihat.wav", 0.3);
+  sounds = [undefined,
+    new Sound("audio/hihat.wav", SOUND_LEVEL),
+    new Sound("audio/snare.wav", SOUND_LEVEL),
+    new Sound("audio/kick.wav", SOUND_LEVEL)
+  ];
 
   // insert the html elements of the sequencer tracks and buttons
   for ( i = 1; i <= NUM_OF_TRACKS; i++) {
@@ -23,11 +25,11 @@ $(document).ready(function() {
 
   // populate the `buttons` object
   // buttons[ buttonNumber ] is a jQuery object containing the div of the button
-  buttons = {};
+  buttons = [undefined];
 
   for ( i = 1; i <= NUM_OF_TRACKS; i++) {
 
-    buttons[i] = {};
+    buttons[i] = [undefined];
 
     for ( j = 1; j <= NUM_OF_STEPS; j++) {
 
@@ -42,14 +44,11 @@ $(document).ready(function() {
   function onPlay() {
     var time = audioContext.currentTime + 0.1;
 
-    if ( buttons[1][currentStep].hasClass('on') ) {
-      sounds[ "hihat" ].play(time);
-    }
-    if ( buttons[2][currentStep].hasClass('on') ) {
-      sounds[ "snare" ].play(time);
-    }
-    if ( buttons[3][currentStep].hasClass('on') ) {
-      sounds[ "kick" ].play(time);
+    // play all the sounds!
+    for (var i=1, l=sounds.length; i< l; i++) {
+      if ( buttons[i][currentStep].hasClass('on') ) {
+        sounds[i].play(time);
+      }
     }
 
     console.log(currentStep);
