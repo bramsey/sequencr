@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     for ( j = 1; j <= NUM_OF_STEPS; j++) {
 
-      $('.sequencer').append('<div class="sequencer-button off"></div>');
+      $('.sequencer').append('<div class="sequencer-button"></div>');
     }
   }
 
@@ -90,19 +90,12 @@ $(document).ready(function() {
 
   // handles sequencer button click events
   $('.sequencer-button').click(function() {
-    var $this = $(this);
-
-    if ($this.hasClass('off')) {
-      $this.addClass('on').removeClass('off');
-    }
-    else {
-      $this.addClass('off').removeClass('on');
-    }
+    $(this).toggleClass('on');
   });
 
   // handles clear button event
   $('.clear').click(function() {
-    $('.sequencer-button').removeClass('on').addClass('off');
+    $('.sequencer-button').removeClass('on');
   });
 
 
