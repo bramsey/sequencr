@@ -59,18 +59,3 @@ Sound.prototype.setVolume = function( level ) {
 Sound.prototype.setPan = function( xValue ) {
   this.panner.setPosition( xValue, 0, 0 );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
