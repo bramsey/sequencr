@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
-  var i,j;
-  var currentStep = 1;
-  var time;
-  var NUM_OF_STEPS = 16;
-  var NUM_OF_TRACKS = 3;
-  var SIXTEENTH_NOTE_TIME = 150; // ms
+  var i,j
+    , currentStep = 1
+    , time
+    , NUM_OF_STEPS = 16
+    , NUM_OF_TRACKS = 3
+    , SIXTEENTH_NOTE_TIME = 150; // ms
 
   // populate the `sounds` object
   sounds = {};
@@ -16,15 +16,15 @@ $(document).ready(function() {
   // insert the html elements of the sequencer tracks and buttons
   for ( i = 1; i <= NUM_OF_TRACKS; i++) {
 
-      for ( j = 1; j <= NUM_OF_STEPS; j++) {
+    for ( j = 1; j <= NUM_OF_STEPS; j++) {
 
-        if ( j % 4 === 1 ) {
-          $('.sequencer').append('<div class="sequencer-button off quarter"></div>');
-        }
-        else {
-          $('.sequencer').append('<div class="sequencer-button off"></div>');
-        }
+      if ( j % 4 === 1 ) {
+        $('.sequencer').append('<div class="sequencer-button off quarter"></div>');
       }
+      else {
+        $('.sequencer').append('<div class="sequencer-button off"></div>');
+      }
+    }
   }
 
   // populate the `buttons` object
@@ -38,78 +38,78 @@ $(document).ready(function() {
     for ( j = 1; j <= NUM_OF_STEPS; j++) {
 
       buttons[i][j] = $('.sequencer-button:nth-child(' + (j + ((i-1) * 16)) + ')');
-    }
-  }
+          }
+          }
 
-  // keeps track of whether sequencer is playing or stopped
-  var player = -1;
+          // keeps track of whether sequencer is playing or stopped
+          var player = -1;
 
-  // function that checks to see if the current step has notes on, and plays them if so
-  function onPlay() {
-    time = audioContext.currentTime;
+          // function that checks to see if the current step has notes on, and plays them if so
+          function onPlay() {
+            time = audioContext.currentTime;
 
-    if ( buttons[1][currentStep].hasClass('on') ) {
-      sounds[ "hihat" ].play(time + 0.1);
-    }
-    if ( buttons[2][currentStep].hasClass('on') ) {
-      sounds[ "snare" ].play(time + 0.1);
-    }
-    if ( buttons[3][currentStep].hasClass('on') ) {
-      sounds[ "kick" ].play(time + 0.1);
-    }
+            if ( buttons[1][currentStep].hasClass('on') ) {
+              sounds[ "hihat" ].play(time + 0.1);
+            }
+            if ( buttons[2][currentStep].hasClass('on') ) {
+              sounds[ "snare" ].play(time + 0.1);
+            }
+            if ( buttons[3][currentStep].hasClass('on') ) {
+              sounds[ "kick" ].play(time + 0.1);
+            }
 
-    console.log(currentStep);
+            console.log(currentStep);
 
-    currentStep = currentStep === NUM_OF_STEPS ? 1 : currentStep + 1;
+            currentStep = currentStep === NUM_OF_STEPS ? 1 : currentStep + 1;
 
-  }
+          }
 
 
-  $('.play').click( function() {
+          $('.play').click( function() {
 
-    if ( player > 0 ) {
-      console.log("STOP!");
-      $('.play h2').replaceWith('<h2>PLAY!</h2>');
+            if ( player > 0 ) {
+              console.log("STOP!");
+              $('.play h2').replaceWith('<h2>PLAY!</h2>');
 
-      clearInterval ( player );
-      player = -1;
-      currentStep = 1;
+              clearInterval ( player );
+              player = -1;
+              currentStep = 1;
 
-    }
-    
-    else {
+            }
 
-      console.log("play!!!");
-      $('.play h2').replaceWith('<h2>STOP!</h2>');
+            else {
 
-      // play the first note immediately, then setInterval waits 1 sixteenth note to check the next step
-      onPlay();
+              console.log("play!!!");
+              $('.play h2').replaceWith('<h2>STOP!</h2>');
 
-      player = setInterval( function() {
+              // play the first note immediately, then setInterval waits 1 sixteenth note to check the next step
+              onPlay();
 
-        onPlay();
+              player = setInterval( function() {
 
-      }, SIXTEENTH_NOTE_TIME );
-    }
+                onPlay();
 
-  });
+              }, SIXTEENTH_NOTE_TIME );
+            }
 
-  // handles sequencer button click events
-  $('.sequencer-button').click(function() {
-    var $this = $(this);
-    
-    if ($this.hasClass('off')) {
-      $this.addClass('on').removeClass('off');
-    }
-    else {
-      $this.addClass('off').removeClass('on');
-    }
-  });
+          });
 
-  // handles clear button event
-  $('.clear').click(function() {
-    $('.sequencer-button').removeClass('on').addClass('off');
-  });
+          // handles sequencer button click events
+          $('.sequencer-button').click(function() {
+            var $this = $(this);
+
+            if ($this.hasClass('off')) {
+              $this.addClass('on').removeClass('off');
+            }
+            else {
+              $this.addClass('off').removeClass('on');
+            }
+          });
+
+          // handles clear button event
+          $('.clear').click(function() {
+            $('.sequencer-button').removeClass('on').addClass('off');
+          });
 
 
 });
