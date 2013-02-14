@@ -2,7 +2,6 @@ $(document).ready(function() {
 
   var i,j
     , currentStep = 1
-    , time
     , NUM_OF_STEPS = 16
     , NUM_OF_TRACKS = 3
     , SIXTEENTH_NOTE_TIME = 150; // ms
@@ -41,16 +40,16 @@ $(document).ready(function() {
 
   // function that checks to see if the current step has notes on, and plays them if so
   function onPlay() {
-    time = audioContext.currentTime;
+    var time = audioContext.currentTime + 0.1;
 
     if ( buttons[1][currentStep].hasClass('on') ) {
-      sounds[ "hihat" ].play(time + 0.1);
+      sounds[ "hihat" ].play(time);
     }
     if ( buttons[2][currentStep].hasClass('on') ) {
-      sounds[ "snare" ].play(time + 0.1);
+      sounds[ "snare" ].play(time);
     }
     if ( buttons[3][currentStep].hasClass('on') ) {
-      sounds[ "kick" ].play(time + 0.1);
+      sounds[ "kick" ].play(time);
     }
 
     console.log(currentStep);
